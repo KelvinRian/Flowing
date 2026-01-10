@@ -1,13 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flowing.Api", "Flowing.Api.csproj", "{0F3D469D-7B9E-4436-AD51-365AFB9F9BF3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flowing.Domain", "..\Flowing.Domain\Flowing.Domain.csproj", "{F1A7A69A-85C2-4D36-BFB1-D013AAFC9B6C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flowing.Infrastructure", "..\Flowing.Infrastructure\Flowing.Infrastructure.csproj", "{BC7D6418-766E-4AA2-BA12-3F9ABEA2723B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F1A7A69A-85C2-4D36-BFB1-D013AAFC9B6C} = {F1A7A69A-85C2-4D36-BFB1-D013AAFC9B6C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flowing.Tests", "..\Flowing.Tests\Flowing.Tests.csproj", "{7D326000-A078-4093-BC4A-4ED351603C64}"
 EndProject

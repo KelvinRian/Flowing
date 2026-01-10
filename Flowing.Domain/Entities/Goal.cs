@@ -7,5 +7,6 @@ namespace Flowing.Domain.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public Status Status { get; set; }
+        public IEnumerable<Action> Actions { get; set; } = new List<Action>();
     }
 }
