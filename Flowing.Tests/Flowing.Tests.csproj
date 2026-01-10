@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Flowing.Api\Flowing.Api.csproj" />
     <ProjectReference Include="..\Flowing.Infrastructure\Flowing.Infrastructure.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
 ﻿using Flowing.Domain.Commands;
+using Flowing.Domain.Entities;
 using Flowing.Domain.Interfaces.Repositories;
 using Flowing.Domain.Interfaces.Services;
 
@@ -15,7 +16,8 @@ namespace Flowing.Domain.Services
 
         public async Task AddGoal(AddGoalCommand command)
         {
-            throw new NotImplementedException();
+            var goal = new Goal(command);
+            await _goalRepository.Add(goal);
         }
     }
 }

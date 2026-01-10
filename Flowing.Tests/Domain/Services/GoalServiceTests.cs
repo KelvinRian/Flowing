@@ -1,4 +1,5 @@
 ﻿using Flowing.Domain.Commands;
+using Flowing.Domain.Entities;
 using Flowing.Domain.Interfaces.Repositories;
 using Flowing.Domain.Interfaces.Services;
 using Flowing.Domain.Services;
@@ -20,7 +21,22 @@ namespace Flowing.Tests.Domain.Services
         [Fact]
         public async Task ShouldAddGoal()
         {
-            // TODO
+            // Arrange
+            var command = new AddGoalCommand()
+            {
+                Title = "Test Title",
+                Description = "Test Description",
+            };
+
+            // Act
+            await _goalService.AddGoal(command);
+
+            // Assert
+            await _goalRepository
+                .Received(1)
+                .Add(Arg.Is<Goal>(x => x.Id != Guid.Empty &&
+                                       x.Title == command.Title &&
+                                       x.Description == command.Description));
         }
     }
 }
