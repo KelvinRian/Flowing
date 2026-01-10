@@ -2,7 +2,7 @@
 {
     public enum Status
     {
-        ToDo,
+        Pending,
         Doing,
         Done
     }

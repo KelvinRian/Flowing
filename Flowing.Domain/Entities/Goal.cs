@@ -1,4 +1,5 @@
-﻿using Flowing.Domain.Enums;
+﻿using Flowing.Domain.Commands;
+using Flowing.Domain.Enums;
 
 namespace Flowing.Domain.Entities
 {
@@ -8,5 +9,14 @@ namespace Flowing.Domain.Entities
         public string Description { get; set; }
         public Status Status { get; set; }
         public IEnumerable<Action> Actions { get; set; } = new List<Action>();
+
+        private Goal() { }
+
+        public Goal(AddGoalCommand addGoalCommand)
+        {
+            Id = Guid.NewGuid();
+            Title = addGoalCommand.Title;
+            Description = addGoalCommand.Description;
+        }
     }
 }
