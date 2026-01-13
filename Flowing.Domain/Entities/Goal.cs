@@ -1,4 +1,4 @@
-﻿using Flowing.Domain.Commands;
+﻿using Flowing.Domain.Commands.Goal;
 using Flowing.Domain.Enums;
 
 namespace Flowing.Domain.Entities
@@ -17,6 +17,12 @@ namespace Flowing.Domain.Entities
             Id = Guid.NewGuid();
             Title = addGoalCommand.Title;
             Description = addGoalCommand.Description;
+        }
+
+        public void Update(UpdateGoalCommand command)
+        {
+            Title = command.Title;
+            Description = command.Description;
         }
     }
 }

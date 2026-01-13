@@ -1,4 +1,4 @@
-﻿using Flowing.Domain.Commands;
+﻿using Flowing.Domain.Commands.Goal;
 using Flowing.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,5 +21,17 @@ namespace Flowing.Api.Controllers
             await _goalService.AddGoal(command);
             return Ok();
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateGoalCommand updateCommand)
+        {
+            await _goalService.UpdateGoal(id, updateCommand);
+            return Ok();
+        }
+
+        // TODO FINISH
+        // TODO GET Goals
+        // TODO DELETE Goal
+        // TODO GET GOAL WITH ACTIONS
     }
 }

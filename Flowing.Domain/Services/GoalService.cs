@@ -1,4 +1,4 @@
-﻿using Flowing.Domain.Commands;
+﻿using Flowing.Domain.Commands.Goal;
 using Flowing.Domain.Entities;
 using Flowing.Domain.Interfaces.Repositories;
 using Flowing.Domain.Interfaces.Services;
@@ -18,6 +18,14 @@ namespace Flowing.Domain.Services
         {
             var goal = new Goal(command);
             await _goalRepository.Add(goal);
+        }
+
+        public async Task UpdateGoal(Guid id, UpdateGoalCommand command)
+        {
+            //TODO Null Validation
+            var goal = await _goalRepository.Get(id);
+            goal.Update(command);
+            await _goalRepository.Update(goal);
         }
     }
 }
