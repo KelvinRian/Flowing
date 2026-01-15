@@ -20,6 +20,14 @@ namespace Flowing.Domain.Services
             await _goalRepository.Add(goal);
         }
 
+        public async Task Finish(Guid id)
+        {
+            //TODO Null Validation
+            var goal = await _goalRepository.Get(id);
+            goal.Finish();
+            await _goalRepository.Update(goal);
+        }
+
         public async Task UpdateGoal(Guid id, UpdateGoalCommand command)
         {
             //TODO Null Validation

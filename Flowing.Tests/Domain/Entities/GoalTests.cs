@@ -51,5 +51,19 @@ namespace Flowing.Tests.Domain.Entities
             Assert.Equal(updateCommand.Title, goal.Title);
             Assert.Equal(updateCommand.Description, goal.Description);
         }
+
+        [Fact]
+        public void ShouldFinish()
+        {
+            // Arrange
+            var command = new AddGoalCommand();
+            var goal = new Goal(command);
+
+            // Act
+            goal.Finish();
+
+            // Assert
+            Assert.Equal(Status.Done, goal.Status);
+        }
     }
 }

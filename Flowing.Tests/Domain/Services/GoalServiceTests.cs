@@ -1,6 +1,7 @@
 ﻿using Flowing.Domain.Commands;
 using Flowing.Domain.Commands.Goal;
 using Flowing.Domain.Entities;
+using Flowing.Domain.Enums;
 using Flowing.Domain.Interfaces.Repositories;
 using Flowing.Domain.Interfaces.Services;
 using Flowing.Domain.Services;
@@ -68,6 +69,26 @@ namespace Flowing.Tests.Domain.Services
                 .Update(Arg.Is<Goal>(x => x.Id == goalId &&
                                          x.Title == command.Title &&
                                          x.Description == command.Description));
+        }
+
+        [Fact]
+        public async Task ShouldFinish()
+        {
+            // Arrange
+            var goalId = Guid.NewGuid();
+            var existingGoal = new Goal(new AddGoalCommand());
+            existingGoal.Id = goalId;
+
+            _goalRepository.Get(goalId).Returns(existingGoal);
+
+            // Act
+            await _goalService.Finish(goalId);
+
+            // Assert
+            await _goalRepository
+                .Received(1)
+                .Update(Arg.Is<Goal>(x => x.Id == goalId &&
+                                         x.Status == Status.Done));
         }
     }
 }

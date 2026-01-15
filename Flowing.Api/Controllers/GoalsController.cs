@@ -29,7 +29,13 @@ namespace Flowing.Api.Controllers
             return Ok();
         }
 
-        // TODO FINISH
+        [HttpPut("{id}/finish")]
+        public async Task<IActionResult> Finish([FromRoute] Guid id)
+        {
+            await _goalService.Finish(id);
+            return Ok();
+        }
+
         // TODO GET Goals
         // TODO DELETE Goal
         // TODO GET GOAL WITH ACTIONS

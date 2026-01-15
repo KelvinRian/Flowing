@@ -24,5 +24,10 @@ namespace Flowing.Domain.Entities
             Title = command.Title;
             Description = command.Description;
         }
+
+        public void Finish()
+        {
+            Status = Status.Done;
+        }
     }
 }
