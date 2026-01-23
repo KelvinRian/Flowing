@@ -1,5 +1,4 @@
-﻿using Flowing.Domain.Commands;
-using Flowing.Domain.Commands.Goal;
+﻿using Flowing.Domain.Commands.Goal;
 using Flowing.Domain.Entities;
 using Flowing.Domain.Enums;
 using Flowing.Domain.Interfaces.Repositories;

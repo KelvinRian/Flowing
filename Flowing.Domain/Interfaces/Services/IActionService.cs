@@ -1,0 +1,9 @@
+﻿using Flowing.Domain.Commands.Action;
+
+namespace Flowing.Domain.Interfaces.Services
+{
+    public interface IActionService
+    {
+        Task AddAction(AddActionCommand command, Guid goalId);
+    }
+}

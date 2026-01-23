@@ -19,8 +19,10 @@ builder.Services.AddDbContext<FlowingContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IGoalService, GoalService>();
+builder.Services.AddScoped<IActionService, ActionService>();
 
 builder.Services.AddScoped<IGoalRepository, GoalRepository>();
+builder.Services.AddScoped<IActionRepository, ActionRepository>();
 
 var app = builder.Build();
 
