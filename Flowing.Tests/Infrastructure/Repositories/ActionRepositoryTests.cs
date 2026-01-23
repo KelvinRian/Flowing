@@ -48,5 +48,88 @@ namespace Flowing.Tests.Infrastructure.Repositories
             Assert.NotNull(addedAction);
             Assert.Equal(addedAction.Name, addedAction.Name);
         }
+
+        [Fact]
+        public async Task ShouldUpdate()
+        {
+            // Arrange
+            var mockContext = Create.MockedDbContextFor<FlowingContext>();
+
+            var goalId = Guid.NewGuid();
+            var goalCommand = new AddGoalCommand()
+            {
+                Title = "Goal test",
+                Description = "Goal Description"
+            };
+            var goal = new Goal(goalCommand);
+            typeof(Goal).GetProperty("Id")!.SetValue(goal, goalId);
+
+            await mockContext.Goals.AddAsync(goal);
+            await mockContext.SaveChangesAsync();
+
+            var command = new AddActionCommand
+            {
+                Name = "test name"
+            };
+            var action = new EntityAction(command, goalId);
+
+            await mockContext.Actions.AddAsync(action);
+            await mockContext.SaveChangesAsync();
+
+            var repository = new ActionRepository(mockContext);
+
+            var updateCommand = new UpdateActionCommand()
+            {
+                Name = "updated name"
+            };
+
+            action.Update(updateCommand);
+
+            // Act
+            await repository.Update(action);
+
+            // Assert
+            var updatedAction = await mockContext.Actions.FirstOrDefaultAsync(a => a.Id == action.Id);
+            Assert.NotNull(updatedAction);
+            Assert.Equal("updated name", updatedAction.Name);
+        }
+
+        [Fact]
+        public async Task ShouldGetById()
+        {
+            // Arrange
+            var mockContext = Create.MockedDbContextFor<FlowingContext>();
+
+            var goalId = Guid.NewGuid();
+            var goalCommand = new AddGoalCommand()
+            {
+                Title = "Goal test",
+                Description = "Goal Description"
+            };
+            var goal = new Goal(goalCommand);
+            typeof(Goal).GetProperty("Id")!.SetValue(goal, goalId);
+
+            await mockContext.Goals.AddAsync(goal);
+            await mockContext.SaveChangesAsync();
+
+            var command = new AddActionCommand
+            {
+                Name = "test name"
+            };
+            var action = new EntityAction(command, goalId);
+
+            await mockContext.Actions.AddAsync(action);
+            await mockContext.SaveChangesAsync();
+
+            var repository = new ActionRepository(mockContext);
+
+            // Act
+            var result = await repository.Get(action.Id);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(action.Id, result.Id);
+            Assert.Equal(action.Name, result.Name);
+        }
     }
 }

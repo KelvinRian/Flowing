@@ -31,5 +31,21 @@ namespace Flowing.Tests.Api.Controllers
                 .Received(1)
                 .AddAction(command, goalId);
         }
+
+        [Fact]
+        public async Task ShouldUpdateAction()
+        {
+            // Arrange
+            var command = new UpdateActionCommand();
+            var actionId = Guid.NewGuid();
+
+            // Act
+            var result = await _controller.UpdateAction(actionId, command);
+
+            // Assert
+            await _actionService
+                .Received(1)
+                .UpdateAction(command, actionId);
+        }
     }
 }

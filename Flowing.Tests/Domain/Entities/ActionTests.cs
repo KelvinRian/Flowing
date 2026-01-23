@@ -25,5 +25,28 @@ namespace Flowing.Tests.Domain.Entities
             Assert.Equal(Status.Pending, action.Status);
             Assert.Equal(action.GoalId, goalId);
         }
+
+        [Fact]
+        public void ShouldUpdateAction()
+        {
+            // Arrange
+            var command = new AddActionCommand
+            {
+                Name = "Initial Action"
+            };
+            var goalId = Guid.NewGuid();
+            var action = new EntityAction(command, goalId);
+
+            var updateCommand = new UpdateActionCommand
+            {
+                Name = "Updated Action"
+            };
+
+            // Act
+            action.Update(updateCommand);
+
+            // Assert
+            Assert.Equal(updateCommand.Name, action.Name);
+        }
     }
 }

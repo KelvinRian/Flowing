@@ -1,6 +1,6 @@
 ﻿namespace Flowing.Domain.Commands.Action
 {
-    public class AddActionCommand : ActionCommand
+    public class UpdateActionCommand : ActionCommand
     {
     }
 }

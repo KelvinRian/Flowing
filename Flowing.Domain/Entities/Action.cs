@@ -19,5 +19,10 @@ namespace Flowing.Domain.Entities
             Status = Status.Pending;
             GoalId = goalId;
         }
+
+        public void Update(ActionCommand command)
+        {
+            Name = command.Name;
+        }
     }
 }

@@ -21,8 +21,14 @@ namespace Flowing.Api.Controllers
             return Ok();
         }
 
+        [HttpPut("actions/{actionId}")]
+        public async Task<IActionResult> UpdateAction([FromRoute] Guid actionId, [FromBody] UpdateActionCommand command)
+        {
+            await _actionService.UpdateAction(command, actionId);
+            return Ok();
+        }
+
         // TODO
-        // Update
         // Delete
         // Change Status
     }

@@ -22,5 +22,15 @@ namespace Flowing.Domain.Services
             var action = new EntityAction(command, goalId);
             await _actionRepository.Add(action);
         }
+
+        public async Task UpdateAction(UpdateActionCommand command, Guid actionId)
+        {
+            // TODO
+            // Null Goal validation
+            // Command Validation
+            var action = await _actionRepository.Get(actionId);
+            action.Update(command);
+            await _actionRepository.Update(action);
+        }
     }
 }
