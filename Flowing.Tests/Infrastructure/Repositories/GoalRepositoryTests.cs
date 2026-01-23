@@ -90,5 +90,40 @@ namespace Flowing.Tests.Infrastructure.Repositories
             var updatedGoal = await repository.Get(goal.Id);
             Assert.Equal(updatedGoal, goal);
         }
+
+        [Fact]
+        public async Task ShouldGetAll()
+        {
+            // Arrange
+            var mockContext = Create.MockedDbContextFor<FlowingContext>();
+            var repository = new GoalRepository(mockContext);
+            
+            var command1 = new AddGoalCommand
+            {
+                Title = "Goal 1",
+                Description = "Description 1"
+            };
+            var goal1 = new Goal(command1);
+            await mockContext.Goals.AddAsync(goal1);
+            
+            var command2 = new AddGoalCommand
+            {
+                Title = "Goal 2",
+                Description = "Description 2"
+            };
+            var goal2 = new Goal(command2);
+            await mockContext.Goals.AddAsync(goal2);
+            
+            await mockContext.SaveChangesAsync();
+            
+            // Act
+            var result = await repository.GetAll();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count);
+            Assert.Contains(result, x => x.Title == "Goal 1");
+            Assert.Contains(result, x => x.Title == "Goal 2");
+        }
     }
 }

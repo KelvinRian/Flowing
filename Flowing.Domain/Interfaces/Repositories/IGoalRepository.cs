@@ -1,4 +1,5 @@
-﻿using Flowing.Domain.Entities;
+﻿using Flowing.Domain.Dtos.Goals;
+using Flowing.Domain.Entities;
 
 namespace Flowing.Domain.Interfaces.Repositories
 {
@@ -7,5 +8,6 @@ namespace Flowing.Domain.Interfaces.Repositories
         Task Add(Goal goal);
         Task<Goal> Get(Guid id);
         Task Update(Goal goal);
+        Task<IReadOnlyList<GoalDto>> GetAll();
     }
 }

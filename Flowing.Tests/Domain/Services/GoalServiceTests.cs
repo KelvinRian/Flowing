@@ -1,4 +1,5 @@
 ﻿using Flowing.Domain.Commands.Goal;
+using Flowing.Domain.Dtos.Goals;
 using Flowing.Domain.Entities;
 using Flowing.Domain.Enums;
 using Flowing.Domain.Interfaces.Repositories;
@@ -88,6 +89,20 @@ namespace Flowing.Tests.Domain.Services
                 .Received(1)
                 .Update(Arg.Is<Goal>(x => x.Id == goalId &&
                                          x.Status == Status.Done));
+        }
+
+        [Fact]
+        public async Task ShouldGetAll()
+        {
+            // Arrange
+            var goalsDto = new List<GoalDto>();
+            _goalRepository.GetAll().Returns(goalsDto);
+
+            // Act
+            var result = await _goalService.GetAll();
+
+            // Assert
+            Assert.Equal(goalsDto, result);
         }
     }
 }

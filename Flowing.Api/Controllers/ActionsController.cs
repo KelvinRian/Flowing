@@ -29,7 +29,7 @@ namespace Flowing.Api.Controllers
         }
 
         // TODO
-        // Delete
-        // Change Status
+        // Delete (Exclusão lógica)
+        // Change Status (Verificar se precisa atualizar status do Goal tbm)
     }
 }

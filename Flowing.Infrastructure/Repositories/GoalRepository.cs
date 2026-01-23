@@ -1,4 +1,5 @@
-﻿using Flowing.Domain.Entities;
+﻿using Flowing.Domain.Dtos.Goals;
+using Flowing.Domain.Entities;
 using Flowing.Domain.Interfaces.Repositories;
 using Flowing.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,14 @@ namespace Flowing.Infrastructure.Repositories
             return await _context
                 .Goals
                 .FirstOrDefaultAsync(g => g.Id == id);
+        }
+
+        public async Task<IReadOnlyList<GoalDto>> GetAll()
+        {
+            return await _context
+                .Goals
+                .Select(x => new GoalDto(x))
+                .ToListAsync();
         }
 
         public async Task Update(Goal goal)

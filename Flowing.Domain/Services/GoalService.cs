@@ -1,4 +1,5 @@
 ﻿using Flowing.Domain.Commands.Goal;
+using Flowing.Domain.Dtos.Goals;
 using Flowing.Domain.Entities;
 using Flowing.Domain.Interfaces.Repositories;
 using Flowing.Domain.Interfaces.Services;
@@ -26,6 +27,11 @@ namespace Flowing.Domain.Services
             var goal = await _goalRepository.Get(id);
             goal.Finish();
             await _goalRepository.Update(goal);
+        }
+
+        public async Task<IReadOnlyList<GoalDto>> GetAll()
+        {
+            return await _goalRepository.GetAll();
         }
 
         public async Task UpdateGoal(Guid id, UpdateGoalCommand command)

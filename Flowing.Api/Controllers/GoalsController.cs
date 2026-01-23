@@ -36,8 +36,14 @@ namespace Flowing.Api.Controllers
             return Ok();
         }
 
-        // TODO GET Goals
-        // TODO DELETE Goal
-        // TODO GET GOAL WITH ACTIONS
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var goals = await _goalService.GetAll();
+            return Ok(goals);
+        }
+
+        // TODO DELETE Goal (Exclusão lógica)
+        // TODO GET GOAL WITH ACTIONS (By Id, traz tudo de Goal + actions com seus status)
     }
 }

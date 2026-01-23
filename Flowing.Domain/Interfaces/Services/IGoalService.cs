@@ -1,4 +1,5 @@
 ﻿using Flowing.Domain.Commands.Goal;
+using Flowing.Domain.Dtos.Goals;
 
 namespace Flowing.Domain.Interfaces.Services
 {
@@ -7,5 +8,6 @@ namespace Flowing.Domain.Interfaces.Services
         Task AddGoal(AddGoalCommand command);
         Task UpdateGoal(Guid id, UpdateGoalCommand command);
         Task Finish(Guid id);
+        Task<IReadOnlyList<GoalDto>> GetAll();
     }
 }
