@@ -23,7 +23,7 @@ namespace Flowing.Infrastructure.Repositories
         {
             return await _context
                 .Actions
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == id && x.Active);
         }
 
         public async Task Update(Domain.Entities.Action action)

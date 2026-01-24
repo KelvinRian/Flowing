@@ -23,6 +23,7 @@ namespace Flowing.Tests.Domain.Entities
             Assert.NotEqual(action.Id, Guid.Empty);
             Assert.Equal(command.Name, action.Name);
             Assert.Equal(Status.Pending, action.Status);
+            Assert.True(action.Active);
             Assert.Equal(action.GoalId, goalId);
         }
 

@@ -131,5 +131,42 @@ namespace Flowing.Tests.Infrastructure.Repositories
             Assert.Equal(action.Id, result.Id);
             Assert.Equal(action.Name, result.Name);
         }
+
+        [Fact]
+        public async Task ShouldNotGetByIdWhenNotActive()
+        {
+            // Arrange
+            var mockContext = Create.MockedDbContextFor<FlowingContext>();
+
+            var goalId = Guid.NewGuid();
+            var goalCommand = new AddGoalCommand()
+            {
+                Title = "Goal test",
+                Description = "Goal Description"
+            };
+            var goal = new Goal(goalCommand);
+            typeof(Goal).GetProperty("Id")!.SetValue(goal, goalId);
+
+            await mockContext.Goals.AddAsync(goal);
+            await mockContext.SaveChangesAsync();
+
+            var command = new AddActionCommand
+            {
+                Name = "test name"
+            };
+            var action = new EntityAction(command, goalId);
+            action.Active = false;
+
+            await mockContext.Actions.AddAsync(action);
+            await mockContext.SaveChangesAsync();
+
+            var repository = new ActionRepository(mockContext);
+
+            // Act
+            var result = await repository.Get(action.Id);
+
+            // Assert
+            Assert.Null(result);
+        }
     }
 }

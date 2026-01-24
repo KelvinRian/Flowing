@@ -9,6 +9,7 @@ namespace Flowing.Domain.Entities
         public string Description { get; set; }
         public Status Status { get; set; }
         public IEnumerable<Action> Actions { get; set; } = new List<Action>();
+        public bool Active { get; set; }
 
         private Goal() { }
 
@@ -17,6 +18,7 @@ namespace Flowing.Domain.Entities
             Id = Guid.NewGuid();
             Title = addGoalCommand.Title;
             Description = addGoalCommand.Description;
+            Active = true;
         }
 
         public void Update(UpdateGoalCommand command)

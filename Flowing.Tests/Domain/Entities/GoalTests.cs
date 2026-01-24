@@ -24,6 +24,7 @@ namespace Flowing.Tests.Domain.Entities
             Assert.Equal(command.Title, goal.Title);
             Assert.Equal(command.Description, goal.Description);
             Assert.Equal(Status.Pending, goal.Status);
+            Assert.True(goal.Active);
             Assert.Empty(goal.Actions);
         }
 

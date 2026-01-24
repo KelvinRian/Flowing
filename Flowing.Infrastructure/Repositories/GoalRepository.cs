@@ -25,13 +25,14 @@ namespace Flowing.Infrastructure.Repositories
         {
             return await _context
                 .Goals
-                .FirstOrDefaultAsync(g => g.Id == id);
+                .FirstOrDefaultAsync(g => g.Id == id && g.Active);
         }
 
         public async Task<IReadOnlyList<GoalDto>> GetAll()
         {
             return await _context
                 .Goals
+                .Where(x => x.Active)
                 .Select(x => new GoalDto(x))
                 .ToListAsync();
         }

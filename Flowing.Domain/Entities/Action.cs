@@ -9,6 +9,7 @@ namespace Flowing.Domain.Entities
         public Status Status { get; set; }
         public Goal Goal { get; set; }
         public Guid GoalId { get; set; }
+        public bool Active { get; set; }
 
         private Action() { }
 
@@ -18,6 +19,7 @@ namespace Flowing.Domain.Entities
             Name = command.Name;
             Status = Status.Pending;
             GoalId = goalId;
+            Active = true;
         }
 
         public void Update(ActionCommand command)

@@ -61,6 +61,30 @@ namespace Flowing.Tests.Infrastructure.Repositories
         }
 
         [Fact]
+        public async Task ShouldNotGetByIdWhenNotActive()
+        {
+            // Arrange
+            var mockContext = Create.MockedDbContextFor<FlowingContext>();
+            var repository = new GoalRepository(mockContext);
+            var command = new AddGoalCommand
+            {
+                Title = "New Goal",
+                Description = "Goal Description"
+            };
+            var goal = new Goal(command);
+            goal.Active = false;
+
+            await mockContext.Goals.AddAsync(goal);
+            await mockContext.SaveChangesAsync();
+
+            // Act
+            var result = await repository.Get(goal.Id);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
         public async Task ShouldUpdate()
         {
             // Arrange
@@ -113,7 +137,16 @@ namespace Flowing.Tests.Infrastructure.Repositories
             };
             var goal2 = new Goal(command2);
             await mockContext.Goals.AddAsync(goal2);
-            
+
+            var commandForInactiveGoal = new AddGoalCommand
+            {
+                Title = "Inactive Goal",
+                Description = "Description Inactive Goal"
+            };
+            var inactiveGoal = new Goal(commandForInactiveGoal);
+            inactiveGoal.Active = false;
+            await mockContext.Goals.AddAsync(inactiveGoal);
+
             await mockContext.SaveChangesAsync();
             
             // Act
