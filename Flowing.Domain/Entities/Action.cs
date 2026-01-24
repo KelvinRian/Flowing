@@ -26,5 +26,10 @@ namespace Flowing.Domain.Entities
         {
             Name = command.Name;
         }
+
+        public void Inactivate()
+        {
+            Active = false;
+        }
     }
 }

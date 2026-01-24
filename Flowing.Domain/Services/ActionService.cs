@@ -23,6 +23,16 @@ namespace Flowing.Domain.Services
             await _actionRepository.Add(action);
         }
 
+        public async Task Inactivate(Guid actionId)
+        {
+            var action = await _actionRepository.Get(actionId);
+            if (action != null)
+            {
+                action.Inactivate();
+                await _actionRepository.Update(action);
+            }
+        }
+
         public async Task UpdateAction(UpdateActionCommand command, Guid actionId)
         {
             // TODO

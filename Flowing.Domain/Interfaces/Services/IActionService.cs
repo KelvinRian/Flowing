@@ -6,5 +6,6 @@ namespace Flowing.Domain.Interfaces.Services
     {
         Task AddAction(AddActionCommand command, Guid goalId);
         Task UpdateAction(UpdateActionCommand command, Guid actionId);
+        Task Inactivate(Guid actionId);
     }
 }

@@ -47,5 +47,20 @@ namespace Flowing.Tests.Api.Controllers
                 .Received(1)
                 .UpdateAction(command, actionId);
         }
+
+        [Fact]
+        public async Task ShouldInactivate()
+        {
+            // Arrange
+            var actionId = Guid.NewGuid();
+
+            // Act
+            var result = await _controller.Inactivate(actionId);
+            
+            // Assert
+            await _actionService
+                .Received(1)
+                .Inactivate(actionId);
+        }
     }
 }

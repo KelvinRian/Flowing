@@ -28,8 +28,14 @@ namespace Flowing.Api.Controllers
             return Ok();
         }
 
+        [HttpPut("actions/{actionId}/inactivate")]
+        public async Task<IActionResult> Inactivate([FromRoute] Guid actionId)
+        {
+            await _actionService.Inactivate(actionId);
+            return Ok();
+        }
+
         // TODO
-        // Delete (Exclusão lógica)
         // Change Status (Verificar se precisa atualizar status do Goal tbm)
     }
 }

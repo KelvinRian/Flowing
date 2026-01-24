@@ -43,7 +43,7 @@ namespace Flowing.Api.Controllers
             return Ok(goals);
         }
 
-        // TODO DELETE Goal (Exclusão lógica)
+        // TODO DELETE Goal (Exclusão lógica - desativa goal e Actions)
         // TODO GET GOAL WITH ACTIONS (By Id, traz tudo de Goal + actions com seus status)
     }
 }
