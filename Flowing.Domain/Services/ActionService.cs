@@ -1,4 +1,5 @@
 ﻿using Flowing.Domain.Commands.Action;
+using Flowing.Domain.Enums;
 using Flowing.Domain.Interfaces.Repositories;
 using Flowing.Domain.Interfaces.Services;
 using EntityAction = Flowing.Domain.Entities.Action;
@@ -21,6 +22,15 @@ namespace Flowing.Domain.Services
             // Command Validation
             var action = new EntityAction(command, goalId);
             await _actionRepository.Add(action);
+        }
+
+        public async Task ChangeStatus(Guid actionId, Status newStatus)
+        {
+            // TODO Null validation
+            // TODO Start Goal if is starting the first action
+            var action = await _actionRepository.Get(actionId);
+            action.ChangeStatus(newStatus);
+            await _actionRepository.Update(action);
         }
 
         public async Task Inactivate(Guid actionId)

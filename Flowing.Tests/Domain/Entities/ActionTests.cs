@@ -67,5 +67,23 @@ namespace Flowing.Tests.Domain.Entities
             // Assert
             Assert.False(action.Active);
         }
+
+        [Fact]
+        public void ShouldChangeStatus()
+        {
+            // Arrange
+            var command = new AddActionCommand
+            {
+                Name = "Test Action"
+            };
+            var goalId = Guid.NewGuid();
+            var action = new EntityAction(command, goalId);
+
+            // Act
+            action.ChangeStatus(Status.Doing);
+
+            // Assert
+            Assert.Equal(Status.Doing, action.Status);
+        }
     }
 }

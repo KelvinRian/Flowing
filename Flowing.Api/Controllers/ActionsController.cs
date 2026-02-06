@@ -1,4 +1,5 @@
 ﻿using Flowing.Domain.Commands.Action;
+using Flowing.Domain.Enums;
 using Flowing.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,7 +36,11 @@ namespace Flowing.Api.Controllers
             return Ok();
         }
 
-        // TODO
-        // Change Status (Verificar se precisa atualizar status do Goal tbm)
+        [HttpPut("actions/{actionId}/change-status-to/{status}")]
+        public async Task<IActionResult> ChangeStatus([FromRoute] Guid actionId, Status status)
+        {
+            await _actionService.ChangeStatus(actionId, status);
+            return Ok();
+        }
     }
 }

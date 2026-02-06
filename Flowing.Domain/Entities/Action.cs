@@ -31,5 +31,10 @@ namespace Flowing.Domain.Entities
         {
             Active = false;
         }
+
+        public void ChangeStatus(Status status)
+        {
+            Status = status;
+        }
     }
 }

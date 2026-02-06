@@ -1,6 +1,7 @@
 ﻿using Flowing.Domain.Commands.Action;
 using Flowing.Domain.Commands.Goal;
 using Flowing.Domain.Entities;
+using Flowing.Domain.Enums;
 using Flowing.Domain.Interfaces.Repositories;
 using Flowing.Domain.Interfaces.Services;
 using Flowing.Domain.Services;
@@ -69,6 +70,24 @@ namespace Flowing.Tests.Domain.Services
             await _actionRepository
                 .DidNotReceive()
                 .Update(Arg.Any<EntityAction>());
+        }
+
+        [Fact]
+        public async Task ShouldChangeStatus()
+        {
+            // Arrange
+            var commandAction = new AddActionCommand();
+            var action = new EntityAction(commandAction, Guid.NewGuid());
+            action.Id = Guid.NewGuid();
+            _actionRepository.Get(action.Id).Returns(action);
+
+            // Act
+            await _actionService.ChangeStatus(action.Id, Status.Doing);
+
+            // Assert
+            await _actionRepository
+                .Received(1)
+                .Update(Arg.Is<EntityAction>(x => x.Id == action.Id && x.Status == Status.Doing));
         }
     }
 }

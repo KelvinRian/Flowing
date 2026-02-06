@@ -1,5 +1,6 @@
 ﻿using Flowing.Api.Controllers;
 using Flowing.Domain.Commands.Action;
+using Flowing.Domain.Enums;
 using Flowing.Domain.Interfaces.Services;
 using NSubstitute;
 
@@ -61,6 +62,22 @@ namespace Flowing.Tests.Api.Controllers
             await _actionService
                 .Received(1)
                 .Inactivate(actionId);
+        }
+
+        [Fact]
+        public async Task ShouldChangeStatus()
+        {
+            // Arrange
+            var actionId = Guid.NewGuid();
+            var status = Status.Doing;
+
+            // Act
+            var result = await _controller.ChangeStatus(actionId, status);
+            
+            // Assert
+            await _actionService
+                .Received(1)
+                .ChangeStatus(actionId, status);
         }
     }
 }
