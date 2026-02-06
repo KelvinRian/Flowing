@@ -43,7 +43,13 @@ namespace Flowing.Api.Controllers
             return Ok(goals);
         }
 
-        // TODO DELETE Goal (Exclusão lógica - desativa goal e Actions)
+        [HttpPut("{id}/Inactivate")]
+        public async Task<IActionResult> Inactivate([FromRoute] Guid id)
+        {
+            await _goalService.Inactivate(id);
+            return Ok();
+        }
+
         // TODO GET GOAL WITH ACTIONS (By Id, traz tudo de Goal + actions com seus status)
     }
 }

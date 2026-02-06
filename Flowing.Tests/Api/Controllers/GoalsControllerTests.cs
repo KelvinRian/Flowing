@@ -79,5 +79,22 @@ namespace Flowing.Tests.Api.Controllers
                 .GetAll();
             Assert.IsType<Microsoft.AspNetCore.Mvc.OkObjectResult>(result);
         }
+
+        [Fact]
+        public async Task ShouldInactivate()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+
+            // Act
+            var result = await _controller.Inactivate(id);
+
+            // Assert
+            await _goalService
+                .Received(1)
+                .Inactivate(id);
+
+            Assert.IsType<Microsoft.AspNetCore.Mvc.OkResult>(result);
+        }
     }
 }

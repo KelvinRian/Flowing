@@ -66,5 +66,19 @@ namespace Flowing.Tests.Domain.Entities
             // Assert
             Assert.Equal(Status.Done, goal.Status);
         }
+
+        [Fact]
+        public void ShouldInactivate()
+        {
+            // Arrange
+            var command = new AddGoalCommand();
+            var goal = new Goal(command);
+            
+            // Act
+            goal.Inactivate();
+            
+            // Assert
+            Assert.False(goal.Active);
+        }
     }
 }

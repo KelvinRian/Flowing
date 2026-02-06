@@ -104,5 +104,24 @@ namespace Flowing.Tests.Domain.Services
             // Assert
             Assert.Equal(goalsDto, result);
         }
+
+        [Fact]
+        public async Task ShouldInactivate()
+        {
+            // Arrange
+            var goalId = Guid.NewGuid();
+            var existingGoal = new Goal(new AddGoalCommand());
+            existingGoal.Id = goalId;
+            _goalRepository.Get(goalId).Returns(existingGoal);
+
+            // Act
+            await _goalService.Inactivate(goalId);
+            
+            // Assert
+            await _goalRepository
+                .Received(1)
+                .Update(Arg.Is<Goal>(x => x.Id == goalId &&
+                                         x.Active == false));
+        }
     }
 }

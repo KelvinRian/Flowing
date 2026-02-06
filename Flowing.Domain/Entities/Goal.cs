@@ -31,5 +31,10 @@ namespace Flowing.Domain.Entities
         {
             Status = Status.Done;
         }
+
+        public void Inactivate()
+        {
+            Active = false;
+        }
     }
 }
