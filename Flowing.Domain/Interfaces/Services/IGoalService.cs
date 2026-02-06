@@ -10,5 +10,6 @@ namespace Flowing.Domain.Interfaces.Services
         Task Finish(Guid id);
         Task<IReadOnlyList<GoalDto>> GetAll();
         Task Inactivate(Guid id);
+        Task<GoalWithActionsDto> GetWithActions(Guid id);
     }
 }

@@ -96,5 +96,21 @@ namespace Flowing.Tests.Api.Controllers
 
             Assert.IsType<Microsoft.AspNetCore.Mvc.OkResult>(result);
         }
+
+        [Fact]
+        public async Task ShouldGetWithActions()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            
+            // Act
+            var result = await _controller.GetWithActions(id);
+            
+            // Assert
+            await _goalService
+                .Received(1)
+                .GetWithActions(id);
+            Assert.IsType<Microsoft.AspNetCore.Mvc.OkObjectResult>(result);
+        }
     }
 }

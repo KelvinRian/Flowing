@@ -123,5 +123,20 @@ namespace Flowing.Tests.Domain.Services
                 .Update(Arg.Is<Goal>(x => x.Id == goalId &&
                                          x.Active == false));
         }
+
+        [Fact]
+        public async Task ShouldGetWithActions()
+        {
+            // Arrange
+            var goalId = Guid.NewGuid();
+            var goalWithActionsDto = new GoalWithActionsDto(new Goal(new AddGoalCommand()));
+            _goalRepository.GetWithActions(goalId).Returns(goalWithActionsDto);
+            
+            // Act
+            var result = await _goalService.GetWithActions(goalId);
+            
+            // Assert
+            Assert.Equal(goalWithActionsDto, result);
+        }
     }
 }

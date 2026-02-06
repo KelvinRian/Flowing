@@ -50,6 +50,11 @@ namespace Flowing.Api.Controllers
             return Ok();
         }
 
-        // TODO GET GOAL WITH ACTIONS (By Id, traz tudo de Goal + actions com seus status)
+        [HttpGet("{id}/with-actions")]
+        public async Task<IActionResult> GetWithActions([FromRoute] Guid id)
+        {
+            var goalWithActions = await _goalService.GetWithActions(id);
+            return Ok(goalWithActions);
+        }
     }
 }

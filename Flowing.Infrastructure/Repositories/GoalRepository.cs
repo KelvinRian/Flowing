@@ -37,6 +37,18 @@ namespace Flowing.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<GoalWithActionsDto> GetWithActions(Guid id)
+        {
+            var goal = await _context
+                .Goals
+                .Include(x => x.Actions)
+                .FirstOrDefaultAsync(g => g.Id == id && g.Active);
+
+            if (goal is null) return new GoalWithActionsDto();
+
+            return new GoalWithActionsDto(goal);
+        }
+
         public async Task Update(Goal goal)
         {
             _context.Goals.Update(goal);

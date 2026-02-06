@@ -49,5 +49,10 @@ namespace Flowing.Domain.Services
             goal.Update(command);
             await _goalRepository.Update(goal);
         }
+
+        public async Task<GoalWithActionsDto> GetWithActions(Guid id)
+        {
+            return await _goalRepository.GetWithActions(id);
+        }
     }
 }
