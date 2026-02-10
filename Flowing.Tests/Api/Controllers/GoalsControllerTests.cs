@@ -1,6 +1,7 @@
 ﻿using Flowing.Api.Controllers;
 using Flowing.Domain.Commands.Goal;
 using Flowing.Domain.Interfaces.Services;
+using Flowing.Domain.Notifications;
 using NSubstitute;
 
 namespace Flowing.Tests.Api.Controllers
@@ -8,12 +9,14 @@ namespace Flowing.Tests.Api.Controllers
     public class GoalsControllerTests
     {
         private readonly IGoalService _goalService;
+        private readonly IDomainNotificationHandler _notifications;
         private readonly GoalsController _controller;
         
         public GoalsControllerTests()
         {
             _goalService = Substitute.For<IGoalService>();
-            _controller = new GoalsController(_goalService);
+            _notifications = Substitute.For<IDomainNotificationHandler>();
+            _controller = new GoalsController(_goalService, _notifications);
         }
 
         [Fact]
@@ -94,7 +97,7 @@ namespace Flowing.Tests.Api.Controllers
                 .Received(1)
                 .Inactivate(id);
 
-            Assert.IsType<Microsoft.AspNetCore.Mvc.OkResult>(result);
+            Assert.IsType<Microsoft.AspNetCore.Mvc.NoContentResult>(result);
         }
 
         [Fact]

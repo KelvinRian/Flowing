@@ -4,6 +4,7 @@ using Flowing.Domain.Entities;
 using Flowing.Domain.Enums;
 using Flowing.Domain.Interfaces.Repositories;
 using Flowing.Domain.Interfaces.Services;
+using Flowing.Domain.Notifications;
 using Flowing.Domain.Services;
 using NSubstitute;
 
@@ -13,11 +14,13 @@ namespace Flowing.Tests.Domain.Services
     {
         private readonly IGoalService _goalService;
         private readonly IGoalRepository _goalRepository;
+        private readonly IDomainNotificationHandler _notifications;
 
         public GoalServiceTests()
         {
             _goalRepository = Substitute.For<IGoalRepository>();
-            _goalService = new GoalService(_goalRepository);
+            _notifications = new DomainNotificationHandler();
+            _goalService = new GoalService(_goalRepository, _notifications);
         }
 
         [Fact]
@@ -122,6 +125,30 @@ namespace Flowing.Tests.Domain.Services
                 .Received(1)
                 .Update(Arg.Is<Goal>(x => x.Id == goalId &&
                                          x.Active == false));
+        }
+
+        [Fact]
+        public async Task ShouldNotInactivate()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+
+            _goalRepository
+                .Get(id)
+                .Returns((Goal)null);
+
+            // Act
+            await _goalService.Inactivate(id);
+
+            // Assert
+            Assert.True(_notifications.HasNotifications());
+
+            var notification = _notifications
+                .GetNotifications()
+                .Single();
+
+            Assert.Equal("Goal.NotFound", notification.Key);
+            Assert.Equal("Meta não encontrada.", notification.Message);
         }
 
         [Fact]

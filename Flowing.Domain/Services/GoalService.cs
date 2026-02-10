@@ -3,14 +3,16 @@ using Flowing.Domain.Dtos.Goals;
 using Flowing.Domain.Entities;
 using Flowing.Domain.Interfaces.Repositories;
 using Flowing.Domain.Interfaces.Services;
+using Flowing.Domain.Notifications;
 
 namespace Flowing.Domain.Services
 {
-    public class GoalService : IGoalService
+    public class GoalService : BaseService, IGoalService
     {
         private readonly IGoalRepository _goalRepository;
 
-        public GoalService(IGoalRepository goalRepository)
+        public GoalService(IGoalRepository goalRepository,
+            IDomainNotificationHandler notifications) : base(notifications)
         {
             _goalRepository = goalRepository;
         }
@@ -23,8 +25,17 @@ namespace Flowing.Domain.Services
 
         public async Task Inactivate(Guid id)
         {
-            //TODO Null Validation
             var goal = await _goalRepository.Get(id);
+
+            if (goal == null)
+            {
+                Notify(
+                    key: "Goal.NotFound",
+                    message: "Meta não encontrada."
+                );
+                return;
+            }
+
             goal.Inactivate();
             await _goalRepository.Update(goal);
         }

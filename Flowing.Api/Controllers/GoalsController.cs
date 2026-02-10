@@ -1,18 +1,21 @@
 ﻿using Flowing.Domain.Commands.Goal;
 using Flowing.Domain.Interfaces.Services;
+using Flowing.Domain.Notifications;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Flowing.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GoalsController : ControllerBase
+    public class GoalsController : HttpControllerBase
     {
         private readonly IGoalService _goalService;
+        private readonly IDomainNotificationHandler _notifications;
 
-        public GoalsController(IGoalService goalService)
+        public GoalsController(IGoalService goalService, IDomainNotificationHandler notifications)
         {
             _goalService = goalService;
+            _notifications = notifications;
         }
 
         [HttpPost]
@@ -47,7 +50,7 @@ namespace Flowing.Api.Controllers
         public async Task<IActionResult> Inactivate([FromRoute] Guid id)
         {
             await _goalService.Inactivate(id);
-            return Ok();
+            return CustomResponse(_notifications);
         }
 
         [HttpGet("{id}/with-actions")]
