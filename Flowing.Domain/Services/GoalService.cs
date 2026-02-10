@@ -42,8 +42,16 @@ namespace Flowing.Domain.Services
 
         public async Task Finish(Guid id)
         {
-            //TODO Null Validation
             var goal = await _goalRepository.Get(id);
+            if (goal == null)
+            {
+                Notify(
+                    key: "Goal.NotFound",
+                    message: "Meta não encontrada."
+                );
+                return;
+            }
+
             goal.Finish();
             await _goalRepository.Update(goal);
         }
@@ -55,8 +63,16 @@ namespace Flowing.Domain.Services
 
         public async Task UpdateGoal(Guid id, UpdateGoalCommand command)
         {
-            //TODO Null Validation
             var goal = await _goalRepository.Get(id);
+            if (goal == null)
+            {
+                Notify(
+                    key: "Goal.NotFound",
+                    message: "Meta não encontrada."
+                );
+                return;
+            }
+
             goal.Update(command);
             await _goalRepository.Update(goal);
         }

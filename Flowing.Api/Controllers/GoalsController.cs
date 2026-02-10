@@ -29,14 +29,14 @@ namespace Flowing.Api.Controllers
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateGoalCommand updateCommand)
         {
             await _goalService.UpdateGoal(id, updateCommand);
-            return Ok();
+            return CustomResponse(_notifications);
         }
 
         [HttpPut("{id}/finish")]
         public async Task<IActionResult> Finish([FromRoute] Guid id)
         {
             await _goalService.Finish(id);
-            return Ok();
+            return CustomResponse(_notifications);
         }
 
         [HttpGet]

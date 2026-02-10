@@ -75,6 +75,35 @@ namespace Flowing.Tests.Domain.Services
         }
 
         [Fact]
+        public async Task ShouldNotUpdate()
+        {
+            // Arrange
+            var goalId = Guid.NewGuid();
+            var command = new UpdateGoalCommand()
+            {
+                Title = "Updated Title",
+                Description = "Updated Description",
+            };
+
+            _goalRepository
+                .Get(goalId)
+                .Returns((Goal)null);
+
+            // Act
+            await _goalService.UpdateGoal(goalId, command);
+
+            // Assert
+            Assert.True(_notifications.HasNotifications());
+
+            var notification = _notifications
+                .GetNotifications()
+                .Single();
+
+            Assert.Equal("Goal.NotFound", notification.Key);
+            Assert.Equal("Meta não encontrada.", notification.Message);
+        }
+
+        [Fact]
         public async Task ShouldFinish()
         {
             // Arrange
@@ -92,6 +121,26 @@ namespace Flowing.Tests.Domain.Services
                 .Received(1)
                 .Update(Arg.Is<Goal>(x => x.Id == goalId &&
                                          x.Status == Status.Done));
+        }
+
+        [Fact]
+        public async Task ShouldNotFinish()
+        {
+            // Arrange
+            var goalId = Guid.NewGuid();
+
+            // Act
+            await _goalService.Finish(goalId);
+
+            // Assert
+            Assert.True(_notifications.HasNotifications());
+
+            var notification = _notifications
+                .GetNotifications()
+                .Single();
+
+            Assert.Equal("Goal.NotFound", notification.Key);
+            Assert.Equal("Meta não encontrada.", notification.Message);
         }
 
         [Fact]

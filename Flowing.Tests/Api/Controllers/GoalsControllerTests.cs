@@ -51,7 +51,7 @@ namespace Flowing.Tests.Api.Controllers
                 .Received(1)
                 .UpdateGoal(goalId, command);
 
-            Assert.IsType<Microsoft.AspNetCore.Mvc.OkResult>(result);
+            Assert.IsType<Microsoft.AspNetCore.Mvc.NoContentResult>(result);
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace Flowing.Tests.Api.Controllers
             await _goalService
                 .Received(1)
                 .Finish(goalId);
-            Assert.IsType<Microsoft.AspNetCore.Mvc.OkResult>(result);
+            Assert.IsType<Microsoft.AspNetCore.Mvc.NoContentResult>(result);
         }
 
         [Fact]
