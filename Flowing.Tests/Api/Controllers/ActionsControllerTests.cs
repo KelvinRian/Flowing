@@ -2,6 +2,7 @@
 using Flowing.Domain.Commands.Action;
 using Flowing.Domain.Enums;
 using Flowing.Domain.Interfaces.Services;
+using Flowing.Domain.Notifications;
 using NSubstitute;
 
 namespace Flowing.Tests.Api.Controllers
@@ -10,11 +11,13 @@ namespace Flowing.Tests.Api.Controllers
     {
         private readonly ActionsController _controller;
         private readonly IActionService _actionService;
+        private readonly IDomainNotificationHandler _notifications;
 
         public ActionsControllerTests()
         {
             _actionService = Substitute.For<IActionService>();
-            _controller = new ActionsController(_actionService);
+            _notifications = new DomainNotificationHandler();
+            _controller = new ActionsController(_actionService, _notifications);
         }
 
         [Fact]
