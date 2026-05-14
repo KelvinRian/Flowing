@@ -33,7 +33,7 @@ namespace Flowing.Tests.Api.Controllers
             // Assert
             await _actionService
                 .Received(1)
-                .AddAction(command, goalId);
+                .Add(command, goalId);
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace Flowing.Tests.Api.Controllers
             // Assert
             await _actionService
                 .Received(1)
-                .UpdateAction(command, actionId);
+                .Update(command, actionId);
         }
 
         [Fact]

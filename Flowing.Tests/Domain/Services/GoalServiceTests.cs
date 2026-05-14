@@ -34,7 +34,7 @@ namespace Flowing.Tests.Domain.Services
             };
 
             // Act
-            await _goalService.AddGoal(command);
+            await _goalService.Add(command);
 
             // Assert
             await _goalRepository
@@ -64,7 +64,7 @@ namespace Flowing.Tests.Domain.Services
             _goalRepository.Get(goalId).Returns(existingGoal);
 
             // Act 
-            await _goalService.UpdateGoal(goalId, command);
+            await _goalService.Update(goalId, command);
 
             // Assert
             await _goalRepository
@@ -90,7 +90,7 @@ namespace Flowing.Tests.Domain.Services
                 .Returns((Goal)null);
 
             // Act
-            await _goalService.UpdateGoal(goalId, command);
+            await _goalService.Update(goalId, command);
 
             // Assert
             Assert.True(_notifications.HasNotifications());
