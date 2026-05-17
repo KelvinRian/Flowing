@@ -43,7 +43,7 @@ namespace Flowing.Tests.Domain.Services
             _goalRepository.Get(goalId).Returns(goal);
 
             // Act
-            await _actionService.AddAction(command, goalId);
+            await _actionService.Add(command, goalId);
 
             // Assert
             await _actionRepository
@@ -63,7 +63,7 @@ namespace Flowing.Tests.Domain.Services
             var goalId = Guid.NewGuid();
 
             // Act
-            await _actionService.AddAction(command, goalId);
+            await _actionService.Add(command, goalId);
 
             // Assert
             Assert.True(_notifications.HasNotifications());

@@ -20,7 +20,7 @@ namespace Flowing.Domain.Services
             _goalRepository = goalRepository;
         }
 
-        public async Task AddAction(AddActionCommand command, Guid goalId)
+        public async Task Add(AddActionCommand command, Guid goalId)
         {
             var goal = await _goalRepository.Get(goalId);
             if (goal == null)
@@ -70,7 +70,7 @@ namespace Flowing.Domain.Services
             await _actionRepository.Update(action);
         }
 
-        public async Task UpdateAction(UpdateActionCommand command, Guid actionId)
+        public async Task Update(UpdateActionCommand command, Guid actionId)
         {
             // TODO
             // Command Validation
