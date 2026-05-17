@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -19,8 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Flowing.Api\Flowing.Api.csproj" />
-    <ProjectReference Include="..\Flowing.Infrastructure\Flowing.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Flowing.Api\Flowing.Api.csproj" />
+    <ProjectReference Include="..\..\src\Flowing.Domain\Flowing.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Flowing.Infrastructure\Flowing.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
