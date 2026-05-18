@@ -1,7 +1,7 @@
 export default function HomeScreen() {
   return (
     <div>
-      {/* Home Screen */}
+      <h1>Olá, Mundo!</h1>
     </div>
   );
 }
