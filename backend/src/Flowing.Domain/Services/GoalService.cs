@@ -17,7 +17,7 @@ namespace Flowing.Domain.Services
             _goalRepository = goalRepository;
         }
 
-        public async Task AddGoal(AddGoalCommand command)
+        public async Task Add(AddGoalCommand command)
         {
             var goal = new Goal(command);
             await _goalRepository.Add(goal);
@@ -61,7 +61,7 @@ namespace Flowing.Domain.Services
             return await _goalRepository.GetAll();
         }
 
-        public async Task UpdateGoal(Guid id, UpdateGoalCommand command)
+        public async Task Update(Guid id, UpdateGoalCommand command)
         {
             var goal = await _goalRepository.Get(id);
             if (goal == null)
