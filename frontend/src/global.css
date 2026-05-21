@@ -4,11 +4,34 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
-  height: 100%;
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
 }
 
 body {
-  background-color: #F7F5F1;
+  background-color: #0F1117;
   font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+:root {
+  --background: #0F1117;
+  --background-secondary: #161A23;
+  --card: #1D2430;
+  --border: #2B3545;
+
+  --primary: #5DA9FF;
+  --primary-hover: #7BB8FF;
+  --accent: #4DE4C5;
+
+  --text: #E6EDF3;
+  --text-secondary: #A9B4C2;
+  --text-muted: #6B7785;
+
+  --success: #33D17A;
+  --warning: #F5C451;
+  --error: #FF6B6B;
 }
