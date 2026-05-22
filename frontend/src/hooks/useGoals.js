@@ -10,11 +10,13 @@ export function useGoals() {
 			async function loadItems() {
 				try {
 					const data = await getGoals();
-
+					console.log(data)
 					const mapped = data.map((goal) => ({
 						id: goal.id,
 						title: goal.title,
 						status: goal.status,
+						numberOfCompletedActions: goal.numberOfCompletedActions,
+						totalActions: goal.totalActions,
 					}));
 
 					setGoals(mapped);

@@ -7,8 +7,8 @@ function GoalCard({ goal }) { return (
       </div>
       <div className="goal-card-progress">
         <strong>
-          {String(goal.completed).padStart(2, '0')}/
-          {String(goal.total).padStart(2, '0')}
+          {goal.numberOfCompletedActions}/
+          {goal.totalActions}
         </strong>
         {' '}tarefas concluídas
       </div>
