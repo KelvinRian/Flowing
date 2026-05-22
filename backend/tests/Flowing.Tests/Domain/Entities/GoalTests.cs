@@ -61,10 +61,10 @@ namespace Flowing.Tests.Domain.Entities
             var goal = new Goal(command);
 
             // Act
-            goal.Finish();
+            goal.Complete();
 
             // Assert
-            Assert.Equal(Status.Done, goal.Status);
+            Assert.Equal(Status.Completed, goal.Status);
         }
 
         [Fact]

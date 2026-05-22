@@ -27,9 +27,9 @@ namespace Flowing.Domain.Entities
             Description = command.Description;
         }
 
-        public void Finish()
+        public void Complete()
         {
-            Status = Status.Done;
+            Status = Status.Completed;
         }
 
         public void Inactivate()

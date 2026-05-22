@@ -52,13 +52,14 @@ namespace Flowing.Domain.Services
                 return;
             }
 
-            goal.Finish();
+            goal.Complete();
             await _goalRepository.Update(goal);
         }
 
         public async Task<IReadOnlyList<GoalDto>> GetAll()
         {
-            return await _goalRepository.GetAll();
+            var goals = await _goalRepository.GetAllWithActions();
+            return goals.Select(x => new GoalDto(x)).ToList();
         }
 
         public async Task Update(Guid id, UpdateGoalCommand command)

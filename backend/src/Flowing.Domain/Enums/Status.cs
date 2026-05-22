@@ -4,6 +4,6 @@
     {
         Pending,
         Doing,
-        Done
+        Completed
     }
 }

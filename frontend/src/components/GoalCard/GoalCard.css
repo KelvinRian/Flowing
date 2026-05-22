@@ -1,0 +1,25 @@
+.goal-card {
+  background-color: var(--background-secondary);
+  border-radius: 16px;
+  padding: 20px;
+  border: none;
+  height: 100%;
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+
+.goal-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.goal-card-progress {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.goal-card-progress strong {
+  color: var(--primary);
+  font-size: 1rem;
+}

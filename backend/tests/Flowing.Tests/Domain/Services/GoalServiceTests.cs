@@ -120,7 +120,7 @@ namespace Flowing.Tests.Domain.Services
             await _goalRepository
                 .Received(1)
                 .Update(Arg.Is<Goal>(x => x.Id == goalId &&
-                                         x.Status == Status.Done));
+                                         x.Status == Status.Completed));
         }
 
         [Fact]
@@ -147,14 +147,27 @@ namespace Flowing.Tests.Domain.Services
         public async Task ShouldGetAll()
         {
             // Arrange
-            var goalsDto = new List<GoalDto>();
-            _goalRepository.GetAll().Returns(goalsDto);
+            var goal = new Goal(new AddGoalCommand()
+            {
+                Title = "Goal",
+                Description = "Goal Description"
+            });
+            goal.Id = Guid.NewGuid();
+
+            var goals = new List<Goal>() { goal };
+
+            _goalRepository.GetAllWithActions().Returns(goals);
 
             // Act
             var result = await _goalService.GetAll();
 
             // Assert
-            Assert.Equal(goalsDto, result);
+            Assert.Single(result);
+            Assert.Equal(goal.Id, result.First().Id);
+            Assert.Equal(goal.Title, result.First().Title);
+            Assert.Equal(0, result.First().NumberOfCompletedActions);
+            Assert.Equal(0, result.First().TotalActions);
+
         }
 
         [Fact]

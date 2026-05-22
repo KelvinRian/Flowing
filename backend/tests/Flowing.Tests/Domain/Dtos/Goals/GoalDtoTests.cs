@@ -1,6 +1,8 @@
-﻿using Flowing.Domain.Commands.Goal;
+﻿using Flowing.Domain.Commands.Action;
+using Flowing.Domain.Commands.Goal;
 using Flowing.Domain.Dtos.Goals;
 using Flowing.Domain.Entities;
+using Action = Flowing.Domain.Entities.Action;
 using Flowing.Domain.Enums;
 
 namespace Flowing.Tests.Domain.Dtos.Goals
@@ -18,7 +20,16 @@ namespace Flowing.Tests.Domain.Dtos.Goals
             };
             var goal = new Goal(command);
             goal.Id = Guid.NewGuid();
-            goal.Status = Status.Done;
+            goal.Status = Status.Completed;
+
+            var notCompletedActionCommand = new AddActionCommand() { };
+            var notCompletedAction = new Action(notCompletedActionCommand, goal.Id);
+
+            var completedActionCommand = new AddActionCommand() { };
+            var completedAction = new Action(completedActionCommand, goal.Id);
+            completedAction.ChangeStatus(Status.Completed);
+
+            goal.Actions = new List<Action> { completedAction, notCompletedAction };
 
             // Act
             var dto = new GoalDto(goal);
@@ -26,8 +37,8 @@ namespace Flowing.Tests.Domain.Dtos.Goals
             // Assert
             Assert.Equal(goal.Id, dto.Id);
             Assert.Equal(goal.Title, dto.Title);
-            Assert.Equal(goal.Description, dto.Description);
-            Assert.Equal(goal.Status, dto.Status);
+            Assert.Equal(1, dto.NumberOfCompletedActions);
+            Assert.Equal(2, dto.TotalActions);
         }
     }
 }
