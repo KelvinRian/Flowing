@@ -2,6 +2,7 @@
 using Flowing.Domain.Commands.Action;
 using Flowing.Domain.Commands.Goal;
 using Flowing.Domain.Entities;
+using Flowing.Domain.Enums;
 using Flowing.Infrastructure.Context;
 using Flowing.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -117,7 +118,7 @@ namespace Flowing.Tests.Infrastructure.Repositories
         }
 
         [Fact]
-        public async Task ShouldGetAll()
+        public async Task ShouldGetAllIncludingActions()
         {
             // Arrange
             var mockContext = Create.MockedDbContextFor<FlowingContext>();
@@ -129,15 +130,17 @@ namespace Flowing.Tests.Infrastructure.Repositories
                 Description = "Description 1"
             };
             var goal1 = new Goal(command1);
-            await mockContext.Goals.AddAsync(goal1);
+            goal1.Id = Guid.NewGuid();
 
-            var command2 = new AddGoalCommand
-            {
-                Title = "Goal 2",
-                Description = "Description 2"
-            };
-            var goal2 = new Goal(command2);
-            await mockContext.Goals.AddAsync(goal2);
+            var action = new EntityAction(
+                new AddActionCommand() {
+                    Name = "action"
+                }, 
+                goal1.Id);
+
+            goal1.Actions = new List<EntityAction> { action };
+
+            await mockContext.Goals.AddAsync(goal1);
 
             var commandForInactiveGoal = new AddGoalCommand
             {
@@ -151,13 +154,13 @@ namespace Flowing.Tests.Infrastructure.Repositories
             await mockContext.SaveChangesAsync();
 
             // Act
-            var result = await repository.GetAll();
+            var result = await repository.GetAllWithActions();
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(2, result.Count);
+            Assert.Single(result);
             Assert.Contains(result, x => x.Title == "Goal 1");
-            Assert.Contains(result, x => x.Title == "Goal 2");
+            Assert.NotEmpty(result.First().Actions);
         }
 
         [Fact]

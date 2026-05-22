@@ -1,5 +1,4 @@
 ﻿using Flowing.Domain.Entities;
-using Flowing.Domain.Enums;
 
 namespace Flowing.Domain.Dtos.Goals
 {
@@ -7,15 +6,15 @@ namespace Flowing.Domain.Dtos.Goals
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
-        public Status Status { get; set; }
-
+        public int NumberOfCompletedActions { get; set; }
+        public int TotalActions { get; set; }
+        
         public GoalDto(Goal goal) 
         {
             Id = goal.Id;
             Title = goal.Title;
-            Description = goal.Description;
-            Status = goal.Status;
+            NumberOfCompletedActions = goal.Actions.Count(x => x.Status == Enums.Status.Completed);
+            TotalActions = goal.Actions.Count();
         }
     }
 }

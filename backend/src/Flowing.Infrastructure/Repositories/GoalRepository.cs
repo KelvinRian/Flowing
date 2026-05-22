@@ -28,12 +28,12 @@ namespace Flowing.Infrastructure.Repositories
                 .FirstOrDefaultAsync(g => g.Id == id && g.Active);
         }
 
-        public async Task<IReadOnlyList<GoalDto>> GetAll()
+        public async Task<IReadOnlyList<Goal>> GetAllWithActions()
         {
             return await _context
                 .Goals
                 .Where(x => x.Active)
-                .Select(x => new GoalDto(x))
+                .Include(x => x.Actions)
                 .ToListAsync();
         }
 

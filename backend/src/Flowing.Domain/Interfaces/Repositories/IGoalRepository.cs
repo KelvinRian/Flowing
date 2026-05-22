@@ -8,7 +8,7 @@ namespace Flowing.Domain.Interfaces.Repositories
         Task Add(Goal goal);
         Task<Goal> Get(Guid id);
         Task Update(Goal goal);
-        Task<IReadOnlyList<GoalDto>> GetAll();
+        Task<IReadOnlyList<Goal>> GetAllWithActions();
         Task<GoalWithActionsDto> GetWithActions(Guid id);
     }
 }
